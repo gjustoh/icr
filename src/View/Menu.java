@@ -180,7 +180,7 @@ public class Menu extends JFrame {
 		});
 	}
 	private void ventana() {
-		result.setText(result +"\n"+main.tesseract());
+		result.setText("\n"+main.tesseract());
 		dialogo.setVisible(true);
 
 	}

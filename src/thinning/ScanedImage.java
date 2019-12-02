@@ -66,6 +66,7 @@ public class ScanedImage {
 		//FileWriter fr = new FileWriter (archivo);
 		//BufferedWriter br = new BufferedWriter(fr);
 		//br.write(str);
+		System.out.println("terminado Tesseract");
 		try(PrintWriter out = new PrintWriter("example1.txt");){
 		out.println(str);}
 		return str;
