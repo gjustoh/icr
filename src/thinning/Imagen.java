@@ -1,4 +1,5 @@
 package thinning;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -83,13 +84,13 @@ public class Imagen {
             }
         }
     }
-    public BufferedImage imprimirImagen(){
+    public void imprimirImagen(String imagen) throws IOException{
         BufferedImage salida = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_RGB);
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {
                 salida.setRGB(j, i, arreglo[i][j].getRGB());
             }
         }
-        return salida;
+        ImageIO.write(salida, "jpg", new File(imagen));
     }
 }

@@ -1,7 +1,13 @@
 package thinning;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 /**
  * Created by nayef on 1/26/15.
@@ -11,7 +17,43 @@ public class ThinningService {
 	 * @param givenImage
 	 * @param changeGivenImage decides whether the givenArray should be modified or a clone should be used
 	 * @return a 2D array of binary image after thinning using zhang-suen thinning algo.
+	 * @throws IOException 
 	 */
+	int[][]imageData;
+	BufferedImage image;
+	
+	public ThinningService(String imagen) throws IOException{
+		 image = ImageIO.read(new File(imagen));
+		 imageData = new int[image.getHeight()][image.getWidth()];
+	        
+	}
+	public void thinning(boolean value){
+		 Color c;
+	        for (int y = 0; y < imageData.length; y++) {
+	            for (int x = 0; x < imageData[y].length; x++) {
+	                if (image.getRGB(x, y) == Color.BLACK.getRGB()) {
+	                    imageData[y][x] = 1;
+	                } else {
+	                    imageData[y][x] = 0;
+	                }
+	            }
+	        }  
+		doZhangSuenThinning(imageData,value);
+		for (int y = 0; y < imageData.length; y++) {
+            for (int x = 0; x < imageData[y].length; x++) {
+                if (imageData[y][x] == 1) {
+                    image.setRGB(x, y, Color.BLACK.getRGB());
+                } else {
+                    image.setRGB(x, y, Color.WHITE.getRGB());
+                }
+            }
+        }
+	}
+	
+	public void print(String salida) throws IOException{
+        ImageIO.write(image, "jpg", new File(salida));
+	}
+	
 	public int[][] doZhangSuenThinning(final int[][] givenImage, boolean changeGivenImage) {
 		int[][] binaryImage;
 		if (changeGivenImage) {
