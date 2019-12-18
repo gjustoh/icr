@@ -3,8 +3,10 @@ package thinning;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +52,7 @@ public class Main {
 		Imagen obj = new Imagen(path);
 		obj.binarizarImagen(130);
 		try {
-			obj.imprimirImagen("imagen4testfinal.jpg");
+			obj.imprimirImagen("bbb.jpg");
 			System.out.println("Otsu terminado.");
 
 		} catch (IOException e) {
@@ -89,35 +91,43 @@ public class Main {
 		return null;
 	}
 
-	public String tesseract() {
-		File f = new File("imagen4testfinalsten.jpg");
-		System.out.println("iniciando Tesseract");
-		ScanedImage scImg = new ScanedImage();
+//	public String tesseract() {
+//		File f = new File("imagen4testfinalsten.jpg");
+//		System.out.println("iniciando Tesseract");
+//		ScanedImage scImg = new ScanedImage();
+//		try {
+//			return scImg.generar(f);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (TesseractException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
+	public static void tesseract() {
+		ProcessBuilder process = new ProcessBuilder();
+		process.command("cmd.exe", "/c", "tesseract-ocr\\tesseract.exe prueba\\bbb.png a -l a1");
 		try {
-			return scImg.generar(f);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TesseractException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-	public static String tesseract(String nombre) {
-		File f = new File(nombre);
-		System.out.println("iniciando Tesseract "+f.getAbsolutePath());
-		ScanedImage scImg = new ScanedImage();
-		try {
-			return scImg.generar(f);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TesseractException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+
+            Process process11 = process.start();
+
+            BufferedReader reader =  new BufferedReader(new InputStreamReader(process11.getInputStream()));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            int exitCode = process11.waitFor();
+           // System.out.println("\nExited with error code : " + exitCode);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	public static Mat histogram(Mat input) {
@@ -234,7 +244,28 @@ return bHist;
 		//it.setLanguage("spa_old");
 		it.setLanguage("a1");
 		Runtime cmd= Runtime.getRuntime();
-		cmd.exec("cmd /C tesserac F:\\aaa.png a -l eng");
+		ProcessBuilder process = new ProcessBuilder();
+		process.command("cmd.exe", "/c", "tesseract-ocr\\tesseract.exe prueba\\aaa.png a -l a1");
+		try {
+
+            Process process11 = process.start();
+
+            BufferedReader reader =  new BufferedReader(new InputStreamReader(process11.getInputStream()));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            int exitCode = process11.waitFor();
+           // System.out.println("\nExited with error code : " + exitCode);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+		//cmd.exec("cmd /C tesserac F:\\aaa.png a -l eng");
 //		it.setDatapath("Tess4J/tessdata"); 
 ////File bi= new File("output/binary.png");
 //		File bi= new File("prueba/prueba2.png");

@@ -156,7 +156,7 @@ public class Menu extends JFrame {
 				main.Otsu(tFile.getText());
 //				main.stentiford();
 //				main.sobel();
-				imagen2.setIcon(new ImageIcon("imagen4testfinal.jpg"));
+				imagen2.setIcon(new ImageIcon("bbb.jpg"));
 
 			}
 		});
@@ -197,7 +197,7 @@ public class Menu extends JFrame {
 		main.tesseract();
 		FileReader f;
 		try {
-			f = new FileReader("example1.txt");
+			f = new FileReader("a.txt");
 
 			BufferedReader b = new BufferedReader(f);
 
