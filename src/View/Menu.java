@@ -5,9 +5,12 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -23,7 +26,11 @@ import thinning.Main;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -37,14 +44,13 @@ import java.awt.event.WindowEvent;
 import java.awt.Point;
 
 public class Menu extends JFrame {
-	private JDialog dialogo = new JDialog(this,"resultados");
+	private JDialog dialogo = new JDialog(this, "resultados");
 	private JPanel contentPane;
 	private JTextField tFile;
 	private JPanel panel_1;
 	private JLabel imagen;
 	private Main main = new Main();
 	private JLabel imagen2;
-	private JLabel result;
 	private JLabel lblNewLabel_1;
 
 	/**
@@ -69,19 +75,18 @@ public class Menu extends JFrame {
 	public Menu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 809, 697);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JMenu mnNewMenu = new JMenu("Inicio");
 		menuBar.add(mnNewMenu);
-		
+
 		JMenu mnNewMenu_1 = new JMenu("Resultados");
 		menuBar.add(mnNewMenu_1);
-		
+
 		JMenuItem mntmString = new JMenuItem("String");
 		mntmString.addActionListener(new ActionListener() {
-
 
 			public void actionPerformed(ActionEvent e) {
 				ventana();
@@ -120,28 +125,28 @@ public class Menu extends JFrame {
 		panel.add(btnBuscar);
 
 		JButton btnSubir = new JButton("Subir");
-		
+
 		btnSubir.setBounds(366, 53, 89, 25);
 		panel.add(btnSubir);
-		
-		 panel_1 = new JPanel();
+
+		panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 128)));
 		panel_1.setBounds(10, 125, 350, 500);
 		contentPane.add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
-		
+
 		imagen = new JLabel();
 		panel_1.add(imagen);
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new LineBorder(new Color(0, 0, 128)));
 		panel_2.setBounds(433, 125, 350, 500);
 		contentPane.add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
-		
+
 		imagen2 = new JLabel();
 		panel_2.add(imagen2, BorderLayout.CENTER);
-		
+
 		lblNewLabel_1 = new JLabel(new ImageIcon("flecha.png"));
 		lblNewLabel_1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -149,51 +154,81 @@ public class Menu extends JFrame {
 				imagen2.setIcon(new ImageIcon(""));
 
 				main.Otsu(tFile.getText());
-				main.stentiford();
-				main.sobel();
-				imagen2.setIcon(new ImageIcon(main.stentiford()));
-				
+//				main.stentiford();
+//				main.sobel();
+				imagen2.setIcon(new ImageIcon("imagen4testfinal.jpg"));
+
 			}
 		});
 		lblNewLabel_1.setBounds(359, 286, 75, 64);
 		contentPane.add(lblNewLabel_1);
-		
+
 		btnSubir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				subirImage();
 			}
 		});
 		dialogo.setLocation(new Point(500, 500));
-//		dialogo.setSize(new Dimension(400, 400));
-		result = new JLabel("Resultado es:");
-		dialogo.setContentPane(result);
 		dialogo.pack();
 		dialogo.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				result.setText("");
 				dialogo.setVisible(false);
 			}
-		
+
 			public void windowClosed(WindowEvent e) {
 				dialogo.setVisible(false);
 			}
 		});
 	}
-	private void ventana() {
-		result.setText(result +"\n"+main.tesseract());
-		dialogo.setVisible(true);
 
+	private void ventana() {
+		JTextArea txtArea = new JTextArea();
+        txtArea.setAutoscrolls(true);
+        txtArea.setPreferredSize(new Dimension(900, 500));
+        txtArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        txtArea.setFont(new Font("courier new", Font.PLAIN, 12));
+        txtArea.setLineWrap(true);
+        JScrollPane txtAreaScroll = new JScrollPane();
+        txtAreaScroll.setViewportView(txtArea);
+        txtAreaScroll.setAutoscrolls(true);
+        StringBuilder fileContents = new StringBuilder();
+        String cadena;
+		
+		main.tesseract();
+		FileReader f;
+		try {
+			f = new FileReader("example1.txt");
+
+			BufferedReader b = new BufferedReader(f);
+
+			while ((cadena = b.readLine()) != null) {
+				fileContents.append(cadena + "\n");
+			}
+			txtArea.setText(fileContents.toString());
+			dialogo.getContentPane().add(txtAreaScroll);
+			b.close();
+			dialogo.pack();
+			dialogo.setVisible(true);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+
 	public void subirImage() {
 		imagen.setIcon(new ImageIcon(tFile.getText()));
 	}
+
 	public void buscador() {
 		JFileChooser fc = new JFileChooser();
 		// Mostrar la ventana para abrir archivo y recoger la respuesta
 		// En el parámetro del showOpenDialog se indica la ventana
 		// al que estará asociado. Con el valor this se asocia a la
 		// ventana que la abre.
-		fc.setFileFilter(new FileNameExtensionFilter("JPG y PNG","jpg","png"));
+		fc.setFileFilter(new FileNameExtensionFilter("JPG y PNG", "jpg", "png"));
 		int respuesta = fc.showOpenDialog(this);
 		// Comprobar si se ha pulsado Aceptar
 		if (respuesta == JFileChooser.APPROVE_OPTION) {

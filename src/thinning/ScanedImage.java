@@ -66,6 +66,7 @@ public class ScanedImage {
 		//FileWriter fr = new FileWriter (archivo);
 		//BufferedWriter br = new BufferedWriter(fr);
 		//br.write(str);
+		System.out.println("terminado Tesseract");
 		try(PrintWriter out = new PrintWriter("example1.txt");){
 		out.println(str);}
 		return str;
@@ -102,6 +103,7 @@ public class ScanedImage {
 		}
 		//String output_file="D:\\cursos\\2019-II\\CAS\\CAS_TEO\\Tess4J\\example1";
 		//Read_File.read_a_file(output_file+".txt");
+		System.out.println("·asdas");
 		return null;
 	} 
 	

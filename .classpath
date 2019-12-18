@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="lib_opencv"/>
 	<classpathentry kind="lib" path="Tess4J/lib/commons-beanutils-1.9.2.jar"/>
 	<classpathentry kind="lib" path="Tess4J/lib/commons-io-2.6.jar"/>
 	<classpathentry kind="lib" path="Tess4J/lib/commons-logging-1.2.jar"/>
@@ -26,5 +27,10 @@
 	<classpathentry kind="lib" path="Tess4J/lib/slf4j-api-1.7.25.jar"/>
 	<classpathentry kind="lib" path="Tess4J/lib/xmlgraphics-commons-1.5.jar"/>
 	<classpathentry kind="lib" path="Tess4J/dist/tess4j-3.4.8.jar"/>
+	<classpathentry kind="lib" path="lib_opencv/opencv-412.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="icr/lib_opencv/x64"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
