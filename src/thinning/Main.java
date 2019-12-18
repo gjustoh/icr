@@ -53,6 +53,7 @@ public class Main {
 		obj.binarizarImagen(130);
 		try {
 			obj.imprimirImagen("bbb.jpg");
+			obj.imprimirImagen("prueba/bbb.jpg");
 			System.out.println("Otsu terminado.");
 
 		} catch (IOException e) {
@@ -108,7 +109,7 @@ public class Main {
 //	}
 	public static void tesseract() {
 		ProcessBuilder process = new ProcessBuilder();
-		process.command("cmd.exe", "/c", "tesseract-ocr\\tesseract.exe prueba\\bbb.png a -l a1");
+		process.command("cmd.exe", "/c", "tesseract-ocr\\tesseract.exe prueba\\bbb.jpg a -l a1");
 		try {
 
             Process process11 = process.start();
@@ -121,7 +122,7 @@ public class Main {
             }
 
             int exitCode = process11.waitFor();
-           // System.out.println("\nExited with error code : " + exitCode);
+            System.out.println("\nExited with error code : " + exitCode);
 
         } catch (IOException e) {
             e.printStackTrace();
