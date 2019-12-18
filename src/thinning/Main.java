@@ -233,13 +233,15 @@ return bHist;
 		Tesseract it = new Tesseract(); 
 		//it.setLanguage("spa_old");
 		it.setLanguage("a1");
-		it.setDatapath("Tess4J/tessdata"); 
-//File bi= new File("output/binary.png");
-		File bi= new File("prueba/hi.png");
-		// doing OCR on the image 
-		// and storing result in string str 
-		String str = it.doOCR(bi); 
-		System.out.println(str);
+		Runtime cmd= Runtime.getRuntime();
+		cmd.exec("cmd /C tesserac F:\\aaa.png a -l eng");
+//		it.setDatapath("Tess4J/tessdata"); 
+////File bi= new File("output/binary.png");
+//		File bi= new File("prueba/prueba2.png");
+//		// doing OCR on the image 
+//		// and storing result in string str 
+//		String str = it.doOCR(bi); 
+//		System.out.println(str);
 		//System.out.println(str); 
 		//String output_file="D:\\cursos\\2019-II\\CAS\\CAS_TEO\\Tess4J\\example1";
 		//Read_File.read_a_file(str + ".txt");
